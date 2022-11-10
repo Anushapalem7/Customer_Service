@@ -1,0 +1,97 @@
+{
+  "Routes": [
+    {
+      "UseServiceDiscovery": true,
+      "DownstreamPathTemplate": "/api/Customer",
+      "ServiceName": "Customer",
+      "DownstreamScheme": "https",
+      "UpstreamPathTemplate": "/gateway/Customer",
+      "UpstreamHttpMethod": [ "Get" ]
+    },
+    {
+      "UseServiceDiscovery": true,
+      "DownstreamPathTemplate": "/api/Customer/GetAll",
+      "ServiceName": "Customer",
+      "DownstreamScheme": "https",
+      "UpstreamPathTemplate": "/gateway/Customer/GetAll",
+      "UpstreamHttpMethod": [ "Get" ]
+    },
+    {
+      "UseServiceDiscovery": true,
+      "DownstreamPathTemplate": "/api/Customer",
+      "ServiceName": "Customer",
+      "DownstreamScheme": "https",
+      "UpstreamPathTemplate": "/gateway/Customer",
+      "UpstreamHttpMethod": [ "Post" ]
+    },
+    {
+      "UseServiceDiscovery": true,
+      "DownstreamPathTemplate": "/api/Customer",
+      "ServiceName": "Customer",
+      "DownstreamScheme": "https",
+      "UpstreamPathTemplate": "/gateway/Customer",
+      "UpstreamHttpMethod": [ "Put" ]
+    },
+    {
+      "UseServiceDiscovery": true,
+      "DownstreamPathTemplate": "/api/Customer/login-user",
+      "ServiceName": "Customer",
+      "DownstreamScheme": "https",
+      "UpstreamPathTemplate": "/gateway/Customer/login-user",
+      "UpstreamHttpMethod": [ "Post" ]
+    },
+    //Request Gateway API Url's
+    {
+      "UseServiceDiscovery": true,
+      "DownstreamPathTemplate": "/api/request",
+      "ServiceName": "Request",
+      "DownstreamScheme": "https",
+      "UpstreamPathTemplate": "/gateway/request",
+      "UpstreamHttpMethod": [ "Get" ]
+    },
+    {
+      "UseServiceDiscovery": true,
+      "DownstreamPathTemplate": "/api/request/GetPending",
+      "ServiceName": "Request",
+      "DownstreamScheme": "https",
+      "UpstreamPathTemplate": "/gateway/request/GetPending",
+      "UpstreamHttpMethod": [ "Get" ]
+    },
+    {
+      "UseServiceDiscovery": true,
+      "DownstreamPathTemplate": "/api/request",
+      "ServiceName": "Request",
+      "DownstreamScheme": "https",
+      "UpstreamPathTemplate": "/gateway/request",
+      "UpstreamHttpMethod": [ "Put" ]
+    },
+    {
+      "UseServiceDiscovery": true,
+      "DownstreamPathTemplate": "/api/request",
+      "ServiceName": "Request",
+      "DownstreamScheme": "https",
+      "UpstreamPathTemplate": "/gateway/request",
+      "UpstreamHttpMethod": [ "Delete" ]
+    },
+    {
+      "UseServiceDiscovery": true,
+      "DownstreamPathTemplate": "/api/request",
+      "ServiceName": "Request",
+      "DownstreamScheme": "https",
+      "UpstreamPathTemplate": "/gateway/request",
+      "UpstreamHttpMethod": [ "Post" ]
+    }
+
+
+
+
+  ],
+  "GlobalConfiguration": {
+    "ServiceDiscoveryProvider": {
+      "Host": "localhost",
+      "Port": "8500",
+      "Type": "Consul"
+    }
+  }
+  
+}

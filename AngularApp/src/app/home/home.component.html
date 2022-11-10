@@ -1,0 +1,187 @@
+<html>
+    <body>
+
+        <div class="navigation-menu">
+            <div id ="navigation">
+            <ul>
+                <li><img class ="logo" style="margin-left: 0px;" src="././assets/logo.png"></li>
+                <li style="margin-top: 10px;"><a class="nav-link active" aria-current="page" [routerLink]="['reader']">Customer Service</a></li>
+                 <li style="margin-left: 830px;margin-top: 20px;font-size: 18px;color: white;" >Welcome {{userName}}</li>
+                <li style="margin-top: 23px;margin-left:10px;font-size: 16px;cursor:pointer;"> <a title="Profile" class="nav-link" style="margin-top: -25px;" (click)="OpenProfile()" >
+                    <i class="fa fa-user" style="font-size:24px"></i></a></li>
+                    <!-- <li style="margin-top: 23px;margin-left:10px;font-size: 16px;"> <a title="Edit Profile" class="nav-link" style="margin-top: -25px;" [routerLink]="['']" >
+                        <i class="fa fa-edit" style="font-size: 24px;" ></i></a></li> -->
+                    
+                <li style="margin-top: 10px;font-size: 18px;font-family:Arial, Helvetica, sans-serif;margin-left:-20px;"><a title="LogOut" [routerLink]="['']" (click)="OpenLogin()">
+                    <i class="fa fa-power-off" style="font-size: 24px;"></i></a></li> 
+               
+            </ul>
+            </div>
+            </div>
+        <div class="navigation-menu1" style="margin-top: -15px;">
+            <div id="navigation" >
+                <ul  >
+                    <li [ngClass]="{'orange': showPending}" style="margin-top: 10px;font-size: 20px;cursor: pointer;"> <a  type="button"   (click)="ShowPending()"> Pending Requests</a></li> 
+                    <li style="margin-top: 10px;"> <a>|</a></li> 
+                    <li [ngClass]="{'orange': closedList}" style="margin-top: 10px;font-size: 20px;cursor: pointer;"> <a  type="button" (click)="ShowClosed()" > Closed Requests</a></li>
+                    <li style="margin-top: 10px;"> <a>|</a></li> 
+                    <li [ngClass]="{'orange': showNew}" *ngIf="!isManager" style="margin-top: 10px;font-size: 20px;cursor: pointer;"> <a  type="button"  (click)="ShowForm()" > New Request</a></li>
+            </ul>
+            </div>
+        </div>
+        <div *ngIf="showAlert" class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>{{alertMessage}}</strong> 
+            <!-- <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button> -->
+          </div>  
+          <div *ngIf="showErrAlert" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>{{alertMessage}}</strong> 
+            <!-- <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button> -->
+          </div>    
+        <table class="table table-responsive" *ngIf="showReq" id="Requests">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Title</th>
+                    <th *ngIf="isManager">Requested By</th>
+                    <th *ngIf="!isManager">Assigned To</th>
+                    <th>Request Type</th>
+                    <th>Request Details</th>
+                    <th>Requested Date</th>
+                    <th>Status</th>
+                    <th *ngIf="showAction || !closedList">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr  *ngFor="let item of requests">
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.title }}</td>
+                    <td >{{ isManager ? item.requestedByName : item.assignedToName}}</td>
+                    <td>{{item.reqType}}</td>
+                    <td>{{ item.reuestDetails}}</td>
+                    <td>{{ item.requestDate |date:'dd/MM/yyyy'}}</td>
+                    <td>{{item.status}}</td>
+                    <td>
+                        <i (click)="openForm(item)" *ngIf="!reopenBtn && !isManager"  class="fa fa-edit" style="font-size: 24px;margin-left:2px;color:blue;cursor: pointer;" title="Edit"></i>
+                        <i *ngIf="reopenBtn && showAction " class="fa fa-refresh" style="font-size:24px;color: green;cursor: pointer;" title="Reopen" (click)="Reopen(item)"></i>    
+                        <!-- <button type="button" *ngIf="reopenBtn && !isManager" style="border:transparent;border-radius: 2px; background-color: rgb(78, 187, 5);color: white;" (click)="Reopen(item)">ReOpen</button> -->
+                            <i  *ngIf="!isManager && !closedList" (click)="DeleteRequest(item)" class="fa fa-trash-o" style="font-size: 24px;margin-left:10px; color:red;cursor: pointer;" title="Delete"></i>
+                            <i *ngIf="isManager && !closedList" class="fa fa-check-circle" style="font-size:24px;color: green;cursor: pointer;" (click)="Approve(item,true)" title="Approve"></i>
+                            <i *ngIf="isManager &&  !closedList" class="fa fa-times-circle" style="font-size:24px;color:red;margin-left:10px;cursor: pointer;" (click)="Approve(item,false)" title="Reject"></i>
+                            <!-- <button type="button" *ngIf="isManager"style="border:transparent;border-radius: 2px;margin-left:2px; background-color: green;color: white;" (click)="Approve(item)">Approve</button> -->
+                            <!-- <button type="button"*ngIf="isManager" style="border:transparent;border-radius: 2px;margin-left:2px; background-color: red;color: white;" (click)="openForm(item)">Reject</button> -->
+                </tr>
+            </tbody>
+        </table>
+        <div class="d-flex justify-content-center">
+              <span class="sr-only" id="loading"></span> 
+          </div>
+        <div *ngIf="showNew" class="newReq" >
+          
+             <label  style="font-size: 20px;">Request Title : </label><br/>
+            <input type="text" [(ngModel)]="request.title" /><br/>
+            <label   style="font-size: 20px;">Request Type : </label><br/>
+            <select (change)="changeType(($event))" [(ngModel)]="request.reqType" style=" width: 55%;padding:10px;display: inline-block;border: 1px solid #ccc;border-radius: 4px; box-sizing: border-box; font-size: 18px;color:black;line-height: 1.2; margin: 0px 100px;">
+                <option value="" disabled selected>Select Type</option>
+                <option value="Hardware">Hardware</option>
+                <option value="Software">Software</option>
+              </select><br/>
+            <label style="font-size: 20px;">Request Details : </label><br/>
+            <textarea [(ngModel)]="request.reuestDetails" style=" width: 55%;padding:10px;display: inline-block;border: 1px solid #ccc;border-radius: 4px; box-sizing: border-box; font-size: 18px;color:black;line-height: 1.2; margin: 0px 100px;height: 100px;" type="text" ></textarea>
+            <br/>
+            
+        
+            <button class="SReq" (click)="AddRequest()">Submit Request</button>
+            <br/>
+            <br/>
+        </div>
+
+        <section *ngIf="showPro" [ngClass]="{'profile': showPro}" style="background-color: #eee;">
+            <div class="container py-5">
+              <div class="row">
+                <div class="col">
+                  <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+                    <ol class="breadcrumb mb-0">
+                      <li class="breadcrumb-item active" aria-current="page"><b style="color: black;">User Profile</b></li>
+                        <li class="breadcrumb-item active" style="margin-left: 910px;" > <a title="Edit Profile" class="nav-link"  [routerLink]="['']" >
+                        <i class="fa fa-edit" style="font-size: 24px;" ></i></a></li>
+                    </ol>
+                  </nav>
+                </div>
+              </div>
+          
+              <div class="row">
+                <div class="col-lg-4">
+                  <div class="card mb-4">
+                    <div class="card-body text-center">
+                        <br/>
+                      <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
+                        class="rounded-circle img-fluid" style="width: 150px;">
+                      <h5 class="my-3">{{customer.Name}}</h5>
+                     <br/>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-8">
+                  <div class="card mb-4">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <p class="mb-0">Full Name</p>
+                        </div>
+                        <div class="col-sm-9">
+                          <p class="text-muted mb-0">{{customer.Name}}</p>
+                        </div>
+                      </div>
+                      <hr>
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <p class="mb-0">Role</p>
+                        </div>
+                        <div class="col-sm-9">
+                          <p class="text-muted mb-0">{{customer.Role}}</p>
+                        </div>
+                      </div>
+                      <hr>
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <p class="mb-0">Email</p>
+                        </div>
+                        <div class="col-sm-9">
+                          <p class="text-muted mb-0">{{customer.Email}}</p>
+                        </div>
+                      </div>
+                      <hr>
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <p class="mb-0">Phone</p>
+                        </div>
+                        <div class="col-sm-9">
+                          <p class="text-muted mb-0">{{customer.Phone}}</p>
+                        </div>
+                      </div>
+                      <hr>
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <p class="mb-0">Address</p>
+                        </div>
+                        <div class="col-sm-9">
+                          <p class="text-muted mb-0">{{customer.Address}}  , {{customer.State}} , {{customer.Country}}</p>
+                        <br/>
+                        </div>
+
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+    </body>
+</html>
+

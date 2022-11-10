@@ -1,0 +1,139 @@
+<html>
+    <body>
+        <div class="navigation-menu">
+            <div id ="navigation">
+            <ul>
+                <li><img class ="logo" style="margin-left: 0px;" src="././assets/logo.png"></li>
+                <li  style="margin-top: 10px;"><a class="nav-link active" aria-current="page" [routerLink]="['home']">Customer Service</a></li> 
+                <li *ngIf=!isLoggedin style="margin-top: 10px;margin-left: 870px;font-size: 18px;font-family:Arial, Helvetica, sans-serif;"><a class="nav-link" [routerLink]="['login']" (click)="OpenLogin()">Login</a></li>
+                <li *ngIf=!isLoggedin style="margin-top: 10px;font-size: 18px;font-family:Arial, Helvetica, sans-serif;"><a class="nav-link" [routerLink]="['login']" (click)="OpenPopup()">SignUp</a></li>
+                <li *ngIf=isLoggedin style="margin-left: 800px; margin-right:50px;margin-top: 20px;font-size: 18px;" >Welcome {{userName}}</li>
+                <!-- <li *ngIf=isLoggedin style="margin-top: 23px;font-size: 16px;"> <a title="Edit Profile" class="nav-link" style="margin-top: -25px;" [routerLink]="['']" >
+                    <i class="fa fa-edit" style="font-size: 24px;"></i></a></li> -->
+                <li *ngIf=isLoggedin style="margin-top: 10px;font-size: 18px;font-family:Arial, Helvetica, sans-serif;margin-left:-20px;"><a title="LogOut" [routerLink]="['']" (click)="OpenLogin()">
+                    <i class="fa fa-power-off"style="font-size: 24px;"></i></a></li> 
+            </ul>
+            </div>
+            </div>
+
+            <div *ngIf="showAlert" class="alert alert-success alert-dismissible fade show" role="alert">
+              <strong>{{alertMsg}}</strong> 
+              <!-- <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button> -->
+            </div>    
+            <div *ngIf="showErrAlert" class="alert alert-danger alert-dismissible fade show" role="alert">
+              <strong>{{alertMsg}}</strong> 
+              <!-- <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button> -->
+            </div>  
+ 
+    <form *ngIf ="openLogin"  [formGroup]="customer.formCustomerGroup"  class="loginForm">
+      <br/>
+     
+        <h2 class="loginhead">Login</h2>
+        <br/>
+        <div class="form-group">
+         <input type="text" class="form-control" formControlName="userEmailControl"  [(ngModel)]="customer.Email" placeholder="UserName"><br/><br/>
+         <span style="margin-left :100px; color:red;" style="margin-left :100px; color:red;" *ngIf="!customer.formCustomerGroup.controls['userEmailControl'].valid && customer.formCustomerGroup.controls['userEmailControl'].touched ">Please enter valid email</span>     
+        </div>
+        <div class="form-group">
+          <input type="password"  class="form-control"  formControlName="passControl" [(ngModel)]="customer.Password"  placeholder="Password"><br/><br/>
+          <span style="margin-left :100px; color:red;" *ngIf="!customer.formCustomerGroup.controls['passControl'].valid&& customer.formCustomerGroup.controls['passControl'].touched">Password Required</span>  
+        </div> 
+          <input class="loginButton" type="button" (click)="login()" value="Login"><br/><br/>
+        <b class="registerLink">Don't have an Account ? </b><a  [routerLink]="['login']" (click)="OpenPopup()">SignUp Here</a>
+        <br/><br/><br/><br/>
+    </form>
+    <div class="d-flex justify-content-center">
+            
+      <span class="sr-only" id="loading"></span>
+   
+  </div>
+    <form  [formGroup]="customer.formCustomerGroup"  *ngIf ="!openLogin" class="rForm">
+      <br/>
+        <h2 class="loginhead">{{heading}}</h2>
+        <br/>
+        <b *ngIf ="!isLoggedin" class="registerLink">Already has an account? </b><a *ngIf ="!isLoggedin" [routerLink]="['login']" (click)="OpenLogin()">Login Here</a> <br/><br/>
+       <div class="form-group">
+        <input class="form-control" type="text" [(ngModel)]="customer.Name" name="name" formControlName="userNameControl" placeholder="Name">
+        <span style="margin-left :100px; color:red;" *ngIf="!customer.formCustomerGroup.controls['userNameControl'].valid && customer.formCustomerGroup.controls['userNameControl'].touched ">Please Enter UserName</span>   
+       </div>
+       <br/>
+       <div class="form-group">
+        <select  class="form-control" formControlName="countryCntrol" [(ngModel)]="customer.Country" placeholder="Select Country" (change)="changeCountry(($event))">
+            <option value="" disabled selected>Select Country</option>
+            <option *ngFor ="let count of countryList">{{count.name}} </option>
+        </select>
+        <span style="margin-left :100px; color:red;" *ngIf="!customer.formCustomerGroup.controls['countryCntrol'].valid && customer.formCustomerGroup.controls['countryCntrol']?.touched ">Country Required</span> 
+        </div>
+        <br/>
+        <div class="form-group">
+        <select class="form-control" formControlName="stateControl" [(ngModel)]="customer.State"  placeholder="Select State" (change)="changeState(($event))">
+            <option value="" disabled selected>Select State</option>
+            <option *ngFor ="let city of cities">{{city}} </option>
+      </select>
+      <span style="margin-left :100px; color:red;"  *ngIf="!customer.formCustomerGroup.controls['stateControl'].valid && customer.formCustomerGroup.controls['stateControl'].touched">State Required</span> 
+        </div>
+        <br/>
+     <div class="form-group">
+      <textarea class="form-control" formControlName="addressControl" [(ngModel)]="customer.Address" name="address" placeholder="Address" style="height: 100px;"></textarea>
+      <span style="margin-left :100px; color:red;"  *ngIf="!customer.formCustomerGroup.controls['addressControl'].valid && customer.formCustomerGroup.controls['addressControl'].touched">Address Required</span>     
+    </div>
+    <br/>
+      <div class="form-group"> 
+      <input class="form-control" formControlName="userEmailControl" [(ngModel)]="customer.Email" name="email" type="text" placeholder="Email">
+      <span style="margin-left :100px; color:red;" style="margin-left :100px; color:red;" *ngIf="!customer.formCustomerGroup.controls['userEmailControl'].valid && customer.formCustomerGroup.controls['userEmailControl'].touched ">Please enter valid email</span>     
+    </div> 
+    <br/>
+    <div class="form-group">
+      <input class="form-control" formControlName="panControl"   [(ngModel)]="customer.PAN" name="pan" type="text" placeholder="PAN">
+      <span style="margin-left :100px; color:red;" *ngIf="!customer.formCustomerGroup.controls['panControl'].valid && customer.formCustomerGroup.controls['panControl']?.touched">PAN Required</span> 
+    </div>
+    <br/>
+      <div class="form-group">  
+      <input class="form-control" formControlName="userPhoneContrl" [(ngModel)]="customer.Phone" name="phone" type="text" placeholder="Contact Number">
+      <span style="margin-left :100px; color:red;" style="margin-left :100px; color:red;" *ngIf="!customer.formCustomerGroup.controls['userPhoneContrl'].valid && customer.formCustomerGroup.controls['userPhoneContrl'].touched ">Please enter valid Phone</span>     
+    </div>  
+    <br/>
+    <label style="font-size: 18px;" class="registerLink"  for="css">Contact Preferece</label><br> 
+    <input  class="registerLink" type="radio"  name="preference" value="Phone" [checked]="isPhone" (click)="selectPre($event)">&nbsp;
+    <label style="font-size: 18px;"  for="html">Phone</label><br>
+    <input  class="registerLink" type="radio" id="css" name="preference" [checked]="isEmail" value="Email" (click)="selectPre($event)">&nbsp;
+    <label style="font-size: 18px;" for="css">Email</label><br><br/>
+    <div class="form-group">     
+         <input class="form-control" formControlName="dateControl" [(ngModel)]="customer.DOB" name="dob" type="text" placeholder="DOB" onfocus="(this.type='date')">
+      <span style="margin-left :100px; color:red;" *ngIf="!customer.formCustomerGroup.controls['dateControl'].valid && customer.formCustomerGroup.controls['dateControl'].touched">Password Required</span>  
+    </div>
+    <br/>
+      <div *ngIf=!isLoggedin class="form-group">   
+      <input  class="form-control"  formControlName="passControl" [(ngModel)]="customer.Password" name="password" type="password" placeholder="Password"><br/>
+      <span style="margin-left :100px; color:red;" *ngIf="!customer.formCustomerGroup.controls['passControl'].valid&& customer.formCustomerGroup.controls['passControl'].touched">Password Required</span>  
+    </div> 
+    <br/>
+      <div *ngIf=!isLoggedin class="form-group">  
+        <input  class="form-control" formControlName="confirmControl" type="password" placeholder="Confirm Password">
+        <span style="margin-left :100px; color:red;" *ngIf="customer.formCustomerGroup.controls['confirmControl'].getError('mustMatch')!=null">Password Mismatched</span>
+        </div> 
+        <br/>
+        <input class="loginButton" type="button" value="Submit" (click)="Register()"><br/><br/>
+        <div *ngIf="showUAlert" class="alert alert-success alert-dismissible fade show" role="alert">
+          <strong>{{alertMsg}}</strong> 
+          <!-- <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button> -->
+        </div> 
+        <div *ngIf="showEAlert" class="alert alert-danger alert-dismissible fade show" role="alert">
+          <strong>{{alertMsg}}</strong> 
+          <!-- <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button> -->
+        </div><br/>
+    </form>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    </body>
+</html>

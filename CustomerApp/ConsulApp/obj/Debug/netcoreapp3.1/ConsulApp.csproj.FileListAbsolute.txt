@@ -1,0 +1,13 @@
+C:\Users\cogdotnet1696\Documents\iis\CustomerApp\ConsulApp\bin\Debug\netcoreapp3.1\ConsulApp.deps.json
+C:\Users\cogdotnet1696\Documents\iis\CustomerApp\ConsulApp\bin\Debug\netcoreapp3.1\ConsulApp.runtimeconfig.json
+C:\Users\cogdotnet1696\Documents\iis\CustomerApp\ConsulApp\bin\Debug\netcoreapp3.1\ConsulApp.runtimeconfig.dev.json
+C:\Users\cogdotnet1696\Documents\iis\CustomerApp\ConsulApp\bin\Debug\netcoreapp3.1\ConsulApp.dll
+C:\Users\cogdotnet1696\Documents\iis\CustomerApp\ConsulApp\bin\Debug\netcoreapp3.1\ConsulApp.pdb
+C:\Users\cogdotnet1696\Documents\iis\CustomerApp\ConsulApp\obj\Debug\netcoreapp3.1\ConsulApp.csproj.AssemblyReference.cache
+C:\Users\cogdotnet1696\Documents\iis\CustomerApp\ConsulApp\obj\Debug\netcoreapp3.1\ConsulApp.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\cogdotnet1696\Documents\iis\CustomerApp\ConsulApp\obj\Debug\netcoreapp3.1\ConsulApp.AssemblyInfoInputs.cache
+C:\Users\cogdotnet1696\Documents\iis\CustomerApp\ConsulApp\obj\Debug\netcoreapp3.1\ConsulApp.AssemblyInfo.cs
+C:\Users\cogdotnet1696\Documents\iis\CustomerApp\ConsulApp\obj\Debug\netcoreapp3.1\ConsulApp.csproj.CoreCompileInputs.cache
+C:\Users\cogdotnet1696\Documents\iis\CustomerApp\ConsulApp\obj\Debug\netcoreapp3.1\ConsulApp.dll
+C:\Users\cogdotnet1696\Documents\iis\CustomerApp\ConsulApp\obj\Debug\netcoreapp3.1\ConsulApp.pdb
+C:\Users\cogdotnet1696\Documents\iis\CustomerApp\ConsulApp\obj\Debug\netcoreapp3.1\ConsulApp.genruntimeconfig.cache

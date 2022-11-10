@@ -1,0 +1,150 @@
+body{
+    width: 1400px;
+}
+
+.navigation-menu ul {
+    padding: 0px;
+    /* margin-top: -10px;
+    margin-left: -15px; */
+  
+  }
+  .navigation-menu1 ul {
+    padding: 0px;
+   /* margin-top: -15px;  */
+    /* margin-left: -15px; */
+    background-color: antiquewhite;
+  
+  }
+  .profile{
+    margin-top: -15px; 
+  }
+  .orange{
+    background-color:#E4D00A;
+    opacity: 0.8;
+    border-radius: 3px;
+  }
+
+  .breadcrumb-item+.breadcrumb-item::before {
+    content: var(--bs-breadcrumb-divider, " ");
+  }
+ 
+
+  #Requests {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+   /* margin-left: -10px; */
+    width: inherit;
+    /* margin-top: -15px;  */
+  }
+  
+  
+  #Requests td, #Requests th {
+    border: 3px solid #ddd;
+    padding: 8px;
+    line-height: 40px;
+  }
+  
+  #Requests tr {background-color: #f2f2f2;}
+  /* #books tr:nth-child(even){background-color: skyblue;} */
+  
+  #Requests tr:hover {background-color: skyblue;}
+  
+  #Requests th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color :#E4D00A;
+    color: white;
+  }
+
+
+  ul {   
+      padding: 0;
+      overflow: hidden;
+      background-color: skyblue;
+  }
+  
+  li {
+      float: left;
+  }
+  
+  li a {
+      display: inline-block;
+      color: black;
+      text-align: center;
+      padding: 10px 20px;
+      text-decoration: none;
+  }
+  
+  
+  
+  #navigation ul
+  {
+    font-size: 1.4em;
+  }
+  
+  #navigation ul li
+  {
+      display: inline;
+    /* color:white; */
+  }
+
+  
+   
+  .logo{
+    /* background-color: slateblue; */
+    margin-top: 5px;
+    height:50px;
+    width: 80px;
+  }
+
+  input[type=text],input[type=date]{
+    width: 55%;
+    padding:10px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 18px;
+    color:black;
+    line-height: 1.2;
+    margin: 0px 100px;
+  }
+  .newReq{
+    padding:10px;
+    margin-top: -15px;
+  }
+  .SReq{
+    width:20%;
+    padding:10px;
+    border-radius: 4px;
+    box-sizing: border-box;
+    color:white ;
+    margin: 0px 300px;
+    background-color: green;
+    border: 1px solid #ccc;
+    font-size: 18px;
+    /* font-family: 'Times New Roman', Times, serif; */
+  }
+
+  #loading{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 1;
+    width: 150px;
+    height: 150px;
+    margin: -75px 0 0 -75px;
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #3498db;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  
